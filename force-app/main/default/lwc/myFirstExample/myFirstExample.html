@@ -52,9 +52,15 @@
         <p>The label of the button that was clicked is: <span class="slds-text-heading_small">{clickedButtonLabel} </span>.
            The total number of clicks is: <span class="slds-text-heading_small"> {clickedTotalCount} </span>
            <!-- Time clicked: {timeClickedChange} -->
-           The result from the backend is : {displayMessage}
+           
         </p>
            
     </div>
+    <template if:true={displayMessage}>
+        <p> The result from the backend is : { displayMessage }</p>>
+    </template>
+    <template if:true={error}>
+        <p> The error occurred - Error is : { error }</p>
+    </template>
     </div>
 </template>
