@@ -63,7 +63,7 @@ export default class MyFirstExample extends LightningElement {
         
         if(event.target.label === 'Change'){
             this.changeBoolean = true;
-            this.machineBoolean = false;
+            this.machineBoolean = false; // otherwise it won't update the content related to the new click
             console.log(this.changeBoolean);
             //this.timeClickedChange = Date.now();
             //this.clickedChangeCount++;

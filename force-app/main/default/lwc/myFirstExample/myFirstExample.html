@@ -1,6 +1,7 @@
 <template>
     <!-- This div is the container for the whole page elements-->
     <div class="slds-m-top_small slds-m-bottom_medium">
+        
     <h1 class="slds-text-heading_small slds-m-bottom_small"> 
         Hi! Welcome to Take Home App! </h1>
         
@@ -8,44 +9,84 @@
         <h1 class="slds-m-top_small slds-m-bottom_medium">
             Dashboard! Find below for the clicked percentage of each button.  
         </h1>
-        <div class="c-container">
-            <lightning-layout>
-                <lightning-layout-item padding="around-small">
-                    <div class="header-column">
-                        <p class="field-title" title="Change">Change Button</p>
-                        <p>{clickedChangePercent} % </p>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item padding="around-small">
-                    <div class="header-column">
-                        <p class="field-title" title="Machine">Machine Button</p>
-                        <p>{clickedMachinePercent} % </p>
-                    </div>
-                </lightning-layout-item>
-                <lightning-layout-item padding="around-small">
-                    <div class="header-column">
-                        <p class="field-title" title="Change Machine">Change Machine Button</p>
-                        <p>{clickedChangeMachinePercent} % </p>
-                    </div>
-                </lightning-layout-item>
-            </lightning-layout>    
+     <div class="c-container">
+            <lightning-card>
+                <lightning-layout multiple-rows>  
+                    <lightning-layout-item size="12" 
+                    small-device-size="4"
+                    padding="around-small">
+                    <div class="slds-align_absolute-center">
+                        <div class="header-column">
+                            <p class="field-title" title="Change">Change Button</p>
+                            <p>{clickedChangePercent} % </p>
+                        </div>
+                    </div>    
+                    </lightning-layout-item>
+                    <!-- <lightning-layout-item padding="around-small"> -->
+                    <lightning-layout-item size="12" 
+                    small-device-size="4"
+                    padding="around-small">
+                    <div class="slds-align_absolute-center">    
+                        <div class="header-column">
+                            <p class="field-title" title="Machine">Machine Button</p>
+                            <p>{clickedMachinePercent} % </p>
+                        </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" 
+                    small-device-size="4"
+                    padding="around-small">
+                    <div class="slds-align_absolute-center">  
+                        <div class="header-column">
+                            <p class="field-title" title="Change Machine">Change Machine Button</p>
+                            <p>{clickedChangeMachinePercent} % </p>
+                        </div>
+                    </div>    
+                    </lightning-layout-item>
+                </lightning-layout>    
+            </lightning-card>
+            
         </div>
         
     </div>    
-    <!-- The div below is for all the lighting-buttons and the instruction on the top-->
+    <!-- The div below is for all the lighting-buttons and the instruction is between the h2 tags-->
     <div class="slds-m-top_small slds-m-bottom_medium">
         <h2 class="slds-text-heading_small slds-m-bottom_small">
             Click the buttons to activate the <code>onclick</code> handler and view the label of the clicked button.
         </h2>
+        <!-- <lightning-card>  -->
+            <lightning-layout multiple-rows>             
+               <lightning-layout-item size="12" 
+                    small-device-size="4"
+                    padding="around-small">
+                    <div class="slds-align_absolute-center">
+                    <lightning-button variant="Brand" label="Change" class="slds-m-left_x-small" onclick={handleClick}>  
+                    </lightning-button>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" 
+                    small-device-size="4"
+                    padding="around-small">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button variant="Brand" label="Machine" class="slds-m-left_x-small" onclick={handleClick}>
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="12"
+                    small-device-size="4"
+                    padding="around-small">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button variant="Brand" label="Change Machine" class="slds-m-left_x-small" onclick={handleClick}>
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+          <!-- </lightning-card> -->
+        
     
-        <lightning-button variant="Brand" label="Change" class="slds-m-left_x-small" onclick={handleClick}>  
-        </lightning-button>
+        
     
-        <lightning-button variant="Brand" label="Machine" class="slds-m-left_x-small" onclick={handleClick}>
-        </lightning-button>
-    
-        <lightning-button variant="Brand" label="Change Machine" class="slds-m-left_x-small" onclick={handleClick}>
-        </lightning-button>
+        
     </div>  
        <!-- The div below is for the result section. Need to move this to the footer -->
     <div class="slds-m-vertical_medium">
@@ -56,11 +97,14 @@
         </p>
            
     </div>
-    <template if:true={displayMessage}>
-        <p> The result from the backend is : { displayMessage }</p>>
-    </template>
-    <template if:true={error}>
-        <p> The error occurred - Error is : { error }</p>
-    </template>
+    <div class="slds-docked-form-footer">
+        <template if:true={displayMessage}>
+            <p> The result from the backend is : { displayMessage }</p>
+        </template>
+        <template if:true={error}>
+            <p> The error occurred - Error is : { error }</p>
+        </template>
+    </div>
+    
     </div>
 </template>
