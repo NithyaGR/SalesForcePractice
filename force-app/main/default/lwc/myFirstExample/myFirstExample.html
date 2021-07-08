@@ -38,13 +38,13 @@
             Click the buttons to activate the <code>onclick</code> handler and view the label of the clicked button.
         </h2>
     
-        <lightning-button variant="Brand" label="Change" class="slds-m-left_x-small" onclick={doChange}>  
+        <lightning-button variant="Brand" label="Change" class="slds-m-left_x-small" onclick={handleClick}>  
         </lightning-button>
     
-        <lightning-button variant="Brand" label="Machine" class="slds-m-left_x-small" onclick={doChange}>
+        <lightning-button variant="Brand" label="Machine" class="slds-m-left_x-small" onclick={handleClick}>
         </lightning-button>
     
-        <lightning-button variant="Brand" label="Change Machine" class="slds-m-left_x-small" onclick={doChange}>
+        <lightning-button variant="Brand" label="Change Machine" class="slds-m-left_x-small" onclick={handleClick}>
         </lightning-button>
     </div>  
        <!-- The div below is for the result section. Need to move this to the footer -->
@@ -52,6 +52,7 @@
         <p>The label of the button that was clicked is: <span class="slds-text-heading_small">{clickedButtonLabel} </span>.
            The total number of clicks is: <span class="slds-text-heading_small"> {clickedTotalCount} </span>
            <!-- Time clicked: {timeClickedChange} -->
+           The result from the backend is : {displayMessage}
         </p>
            
     </div>

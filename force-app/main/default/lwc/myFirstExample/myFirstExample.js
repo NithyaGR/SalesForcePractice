@@ -1,4 +1,5 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, track } from 'lwc';
+import doChange from '@salesforce/apex/ChangeMachineController.doChange';
 
 
 export default class MyFirstExample extends LightningElement {
@@ -22,26 +23,48 @@ export default class MyFirstExample extends LightningElement {
     
     // variable to store the name/label of the button which is clicked
     clickedButtonLabel;
-     
 
-    doChange(event) {
+    //variables to store the boolean parameters
+    changeBoolean = false;
+    machineBoolean = false;
+
+
+    //variables to store the result from the backend
+    @track displayMessage;
+    @track error;
+    handleClick(event) {
         this.clickedButtonLabel = event.target.label;
         //each nd every click add the total click counts.
         this.clickedTotalCount++;
+        
         if(event.target.label === 'Change'){
-            this.timeClickedChange = Date.now();
-            this.clickedChangeCount++;
-            this.clickedChangePercent = Math.round((this.clickedChangeCount / this.clickedTotalCount) *100) ; 
+            this.changeBoolean = true;
+            //this.timeClickedChange = Date.now();
+            //this.clickedChangeCount++;
+            //this.clickedChangePercent = Math.round((this.clickedChangeCount / this.clickedTotalCount) *100) ; 
 
         } else if (event.target.label === 'Machine'){
-            this.timeClickedMachine = Date.now();
-            this.clickedMachineCount++;
-            this.clickedMachinePercent = Math.round((this.clickedMachineCount / this.clickedTotalCount) *100) ; 
+            this.machineBoolean = true;
+            // this.timeClickedMachine = Date.now();
+            // this.clickedMachineCount++;
+            // this.clickedMachinePercent = Math.round((this.clickedMachineCount / this.clickedTotalCount) *100) ; 
         } else {
-            this.timeClickedChangeMachine = Date.now();
-            this.clickedChangeMachineCount++;
-            this.clickedChangeMachinePercent = Math.round((this.clickedChangeMachineCount / this.clickedTotalCount) *100) ; 
+            this.changeBoolean = true;
+            this.machineBoolean = true;
+            // this.timeClickedChangeMachine = Date.now();
+            // this.clickedChangeMachineCount++;
+            // this.clickedChangeMachinePercent = Math.round((this.clickedChangeMachineCount / this.clickedTotalCount) *100) ; 
         }
+        doChange(this.changeBoolean, this.machineBoolean)
+        .then(result => {
+            this.displayMessage = result;
+            console.log(result);
+        })
+        .catch(error => {
+            this.error = error;
+            console.log(error);
+        });
+
 
     }
 }
