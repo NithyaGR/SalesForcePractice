@@ -1,5 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import doChange from '@salesforce/apex/ChangeMachineController.doChange';
+import getRecords from '@salesforce/apex/RecordController.getRecord';
+//import getPercent from './helper';
 
 
 export default class MyFirstExample extends LightningElement {
@@ -14,8 +16,7 @@ export default class MyFirstExample extends LightningElement {
     clickedMachinePercent = 0;
     clickedChangeMachinePercent = 0;
 
-    // variables to to store the time clicked 
-    
+    // variables to to store the time clicked   
     timeClickedChange = 0;
     timeClickedMachine = 0;
     timeClickedChangeMachine = 0;
@@ -29,21 +30,14 @@ export default class MyFirstExample extends LightningElement {
     @track machineBoolean = false;
 
 
-    //variables to store the result from the backend
+    //variables to store the result from the backend for displaying in the browser
     @track displayMessage;
     @track error;
-    
-    // Not going to try as this is with no parameters
-    // @wire(doChange)
-    // wiredAccounts({ error, data }) {
-    //     if (data) {
-    //         this.displayMessage = data;
-    //     } else if (error) {
-    //         console.log(error);
-    //         this.error = error.body;
-    //     }
-    // }
 
+    @track displayTableRecord;
+    @track errorRecord;
+    
+    // to feed the record 
     //with params
     @wire (doChange,{change: '$changeBoolean', machine: '$machineBoolean'})
 	wiredAccounts({data, error}){
@@ -54,37 +48,63 @@ export default class MyFirstExample extends LightningElement {
 			this.displayMessage =undefined;
 			this.error = error;
 		}
-	}
+    }
+    // to get the custom object records
+    @wire (getRecords)
+	wiredAccounts({data, error}){
+		if(data) {
+			this.displayTableRecord =data;
+            this.errorRecord = undefined;
+            console.log(data);
+		}else {
+			this.displayTableRecord =undefined;
+			this.errorRecord = error;
+		}
+    }
+    
 
     handleClick(event) {
         this.clickedButtonLabel = event.target.label;
-        //each nd every click add the total click counts.
+        //each and every click add the total click counts.
         this.clickedTotalCount++;
         
         if(event.target.label === 'Change'){
             this.changeBoolean = true;
             this.machineBoolean = false; // otherwise it won't update the content related to the new click
             console.log(this.changeBoolean);
-            //this.timeClickedChange = Date.now();
-            //this.clickedChangeCount++;
-            //this.clickedChangePercent = Math.round((this.clickedChangeCount / this.clickedTotalCount) *100) ; 
+            console.log(this.timeClickedChange);
+            this.clickedChangeCount++;
+            this.clickedChangePercent = Math.round((this.clickedChangeCount / this.clickedTotalCount) *100) ; 
 
         } else if (event.target.label === 'Machine'){
             this.machineBoolean = true;
             this.changeBoolean = false;
             console.log(this.machineBoolean);
-            // this.timeClickedMachine = Date.now();
-            // this.clickedMachineCount++;
-            // this.clickedMachinePercent = Math.round((this.clickedMachineCount / this.clickedTotalCount) *100) ; 
+            console.log(this.timeClickedMachine);
+            this.clickedMachineCount++;
+            this.clickedMachinePercent = Math.round((this.clickedMachineCount / this.clickedTotalCount) *100) ; 
         } else {
             this.changeBoolean = true;
             this.machineBoolean = true;
             console.log(this.changeBoolean);
             console.log(this.machineBoolean);
-            // this.timeClickedChangeMachine = Date.now();
-            // this.clickedChangeMachineCount++;
-            // this.clickedChangeMachinePercent = Math.round((this.clickedChangeMachineCount / this.clickedTotalCount) *100) ; 
+            console.log(this.timeClickedChangeMachine);
+            this.clickedChangeMachineCount++;
+            this.clickedChangeMachinePercent = Math.round((this.clickedChangeMachineCount / this.clickedTotalCount) *100) ; 
+            // debug this later
+            //this.clickedChangeMachinePercent = getPercent(this.clickedChangeMachineCount, this.clickedTotalCount);
         }
+            // Not going to try as this is with no parameters
+    // @wire(doChange)
+    // wiredAccounts({ error, data }) {
+    //     if (data) {
+    //         this.displayMessage = data;
+    //     } else if (error) {
+    //         console.log(error);
+    //         this.error = error.body;
+    //     }
+    // }
+
         //calling method imperatively didn't call the server side method.
         // This didn't work - I think, need to check the syntax for 2 params @line no 91
         // console.log("Calling the doChange method")
@@ -103,10 +123,7 @@ export default class MyFirstExample extends LightningElement {
         //     // console.log(this.error);
         //     //console.log(error["Error"]);
         // });
-
-
-    }
-    // ts files - error
+            // ts files - error
     // sendDataType : function (component, event, helper) {
     //     var action = component.get('c.doChange'); 
     //     // method name i.e. getEntity should be same as defined in apex class
@@ -128,5 +145,7 @@ export default class MyFirstExample extends LightningElement {
     //     });
     //     $A.enqueueAction(action);
     // }
-    
+
+
+    }  
 }
