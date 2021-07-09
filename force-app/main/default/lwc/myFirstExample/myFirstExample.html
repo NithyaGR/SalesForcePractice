@@ -1,6 +1,7 @@
 <template>
     <!-- This div is the container for the whole page elements-->
     <div class="slds-m-top_small slds-m-bottom_medium">
+        <!-- m is for margin - slds salesforce lightning design system -->
         
     <h1 class="slds-text-heading_small slds-m-bottom_small"> 
         Hi! Welcome to Take Home App! </h1>
@@ -11,6 +12,7 @@
         </h1>
      <div class="c-container">
             <lightning-card>
+                <!-- lightning card provides the container with rounded corner -->
                 <lightning-layout multiple-rows>  
                     <lightning-layout-item size="12" 
                     small-device-size="4"
@@ -44,17 +46,18 @@
                     </div>    
                     </lightning-layout-item>
                 </lightning-layout>    
-            </lightning-card>
-            
-        </div>
-        
+            </lightning-card>            
+        </div>       
     </div>    
+    <!-- <div>
+        <h2> Table Record</h2>
+        {tableRecord.data}
+    </div> -->
     <!-- The div below is for all the lighting-buttons and the instruction is between the h2 tags-->
     <div class="slds-m-top_small slds-m-bottom_medium">
         <h2 class="slds-text-heading_small slds-m-bottom_small">
             Click the buttons to activate the <code>onclick</code> handler and view the label of the clicked button.
         </h2>
-        <!-- <lightning-card>  -->
             <lightning-layout multiple-rows>             
                <lightning-layout-item size="12" 
                     small-device-size="4"
@@ -80,27 +83,18 @@
                         </lightning-button>
                     </div>
                 </lightning-layout-item>
-            </lightning-layout>
-          <!-- </lightning-card> -->
-        
-    
-        
-    
-        
+            </lightning-layout>      
     </div>  
        <!-- The div below is for the result section. Need to move this to the footer -->
-    <div class="slds-m-vertical_medium">
+    <!-- <div class="slds-m-vertical_medium">
         <p>The label of the button that was clicked is: <span class="slds-text-heading_small">{clickedButtonLabel} </span>.
            The total number of clicks is: <span class="slds-text-heading_small"> {clickedTotalCount} </span>
            The total number of Change clicks is: <span class="slds-text-heading_small"> {clickedChangeCount} </span>
            The total number of Machine clicks is: <span class="slds-text-heading_small"> {clickedMachineCount} </span>
-           The total number of ChangeMachine clicks is: <span class="slds-text-heading_small"> {clickedChangeMachineCount} </span>
-           <!-- {timeClickedChange}.  {timeClickedMachine}.  {timeClickedChangeMachine}. -->
-           <!-- Time clicked: {timeClickedChange} -->
-           
+           The total number of ChangeMachine clicks is: <span class="slds-text-heading_small"> {clickedChangeMachineCount} </span>           
         </p>
            
-    </div>
+    </div> -->
     <div class="slds-docked-form-footer">
         <template if:true={displayMessage}>
             <p> The result from the backend is : { displayMessage }</p>

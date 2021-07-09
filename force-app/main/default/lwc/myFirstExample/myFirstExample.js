@@ -1,6 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import doChange from '@salesforce/apex/ChangeMachineController.doChange';
-import getRecords from '@salesforce/apex/RecordController.getRecord';
+import getRecords from '@salesforce/apex/RecordController.getRecords';
 //import getPercent from './helper';
 
 
@@ -25,20 +25,28 @@ export default class MyFirstExample extends LightningElement {
     // variable to store the name/label of the button which is clicked
     clickedButtonLabel;
 
-    //variables to store the boolean parameters
+    //@track decorator is to mention the variable changes it's value based on that value 
+    //it needs to re-render on the the template
+    //variables to store the boolean parameters to send to the backend doChange controller method
     @track changeBoolean = false;
     @track machineBoolean = false;
 
 
     //variables to store the result from the backend for displaying in the browser
+
     @track displayMessage;
     @track error;
 
     @track displayTableRecord;
     @track errorRecord;
-    
+
+    // @ wire decorator is to read Salesforce data, Lightning web components use a reactive wire
+    // service. When the wire service provisions data, the component re-renders.
+    //wire property - to get simple results from the backend
+    @wire (getRecords) tableRecord;
     // to feed the record 
-    //with params
+    //with params  
+    //wire function to do some processing
     @wire (doChange,{change: '$changeBoolean', machine: '$machineBoolean'})
 	wiredAccounts({data, error}){
 		if(data) {
@@ -49,21 +57,23 @@ export default class MyFirstExample extends LightningElement {
 			this.error = error;
 		}
     }
+    // Didn't bring any record as there were no inputs done in the record - debugging
     // to get the custom object records
-    @wire (getRecords)
-	wiredAccounts({data, error}){
-		if(data) {
-			this.displayTableRecord =data;
-            this.errorRecord = undefined;
-            console.log(data);
-		}else {
-			this.displayTableRecord =undefined;
-			this.errorRecord = error;
-		}
-    }
+    // @wire (getRecords)
+	// wiredAccounts({response, errorResponse}){
+	// 	if(response) {
+	// 		this.displayTableRecord =response;
+    //         this.errorRecord = undefined;
+    //         console.log(response);
+	// 	}else {
+	// 		this.displayTableRecord =undefined;
+	// 		this.errorRecord = errorResponse;
+	// 	}
+    // }
     
 
     handleClick(event) {
+        //console.log(recordTable.data);
         this.clickedButtonLabel = event.target.label;
         //each and every click add the total click counts.
         this.clickedTotalCount++;
@@ -94,7 +104,7 @@ export default class MyFirstExample extends LightningElement {
             // debug this later
             //this.clickedChangeMachinePercent = getPercent(this.clickedChangeMachineCount, this.clickedTotalCount);
         }
-            // Not going to try as this is with no parameters
+            // Not going to try as this is with no parameters - to learn kept here
     // @wire(doChange)
     // wiredAccounts({ error, data }) {
     //     if (data) {
@@ -106,6 +116,8 @@ export default class MyFirstExample extends LightningElement {
     // }
 
         //calling method imperatively didn't call the server side method.
+        // This is better for the invoking doChange in the backend - as it needs to be triggered
+        // in the even listener - handleClick
         // This didn't work - I think, need to check the syntax for 2 params @line no 91
         // console.log("Calling the doChange method")
         // doChange({change: changeBoolean, machine: machineBoolean})
